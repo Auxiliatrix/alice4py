@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from enum import Enum
 from alice.main import constants
 from alice.framework.events.base.eventtype import EventType
-from eventhandler import EventHandler
+from alice.framework.events.handlers.eventhandler import EventHandler
 
 class MessageHandler(EventHandler, ABC):
 

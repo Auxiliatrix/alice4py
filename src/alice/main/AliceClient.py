@@ -9,7 +9,7 @@ class AliceClient(discord.Client):
     and contains default presets for client initialization.
     """
 
-    @classmethod
+    @staticmethod
     def _get_intents():
         """
         Builds AliceClient's default Discord Client intents.
@@ -21,17 +21,14 @@ class AliceClient(discord.Client):
         intents.message_content = True
         return intents
 
-    def __init__(self, bot_token):
+    def __init__(self):
         """
         Initializes the AliceClient Discord Client manager.
-
-        :param bot_token: String representing the Discord Bot token used to register this instantiation.
         """
 
-        self._bot_token = bot_token
         self.command_hook = commands.Bot(command_prefix=constants.PREFIX, intents=AliceClient._get_intents())
 
-        super().__init__(intents=AliceClient._get_intents())
+        super().__init__(intents=AliceClient._get_intents(), logging=self._get_logger())
     
     def _get_logger(self):
         """
@@ -41,13 +38,13 @@ class AliceClient(discord.Client):
 
         return logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
 
-    def startup(self):
+    def startup(self, token):
         """
         Establishes a Discord Client connection with the given parameters.
         Starts up all necessary components.
         """
 
-        self.run(logging=self._get_logger())
+        self.run(token)
     
     def shutdown(self):
         """

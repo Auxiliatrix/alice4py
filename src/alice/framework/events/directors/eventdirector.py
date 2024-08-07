@@ -9,8 +9,7 @@ class EventDirector(Generic):
         self._client = client
         self._event_type = event_type
         self._handlers = []
-        AliceClient.__dict__[f"on_{self._event_type}"] = self.direct
-
+        setattr(AliceClient, f"on_{self._event_type}", self.direct)
 
     def direct(self, *payload):
         for handler in self._handlers:

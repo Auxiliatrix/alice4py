@@ -1,7 +1,7 @@
 from alice.framework.events.base.eventtype import EventType
 from alice.framework.commands.commandwrapper import CommandWrapper
 from alice.framework.events.handlers.messagehandler import MessageHandler
-from eventdirector import EventDirector
+from alice.framework.events.directors.eventdirector import EventDirector
 
 class CommandDirector(EventDirector):
 
