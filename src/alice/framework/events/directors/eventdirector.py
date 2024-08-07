@@ -1,17 +1,18 @@
-from alina.utils.generic import Generic
+from alina.utils.typing.generic import Generic
 from alice.main.aliceclient import AliceClient
-from eventhandler import EventHandler
-from eventtype import EventType
+from alice.framework.events.handlers.eventhandler import EventHandler
+from alice.framework.events.base.eventtype import EventType
 
 class EventDirector(Generic):
 
-    def __init__(self, event_type: EventType):
+    def __init__(self, client, event_type: EventType):
+        self._client = client
         self._event_type = event_type
         self._handlers = []
         AliceClient.__dict__[f"on_{self._event_type}"] = self.direct
 
 
-    def direct(self, payload):
+    def direct(self, *payload):
         for handler in self._handlers:
             handler.handle(payload)
 

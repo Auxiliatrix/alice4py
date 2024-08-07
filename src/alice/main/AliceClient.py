@@ -1,4 +1,7 @@
 import discord, logging
+from discord.ext import commands
+
+from alice.main import constants
 
 class AliceClient(discord.Client):
     """
@@ -26,6 +29,7 @@ class AliceClient(discord.Client):
         """
 
         self._bot_token = bot_token
+        self.command_hook = commands.Bot(command_prefix=constants.PREFIX, intents=AliceClient._get_intents())
 
         super().__init__(intents=AliceClient._get_intents())
     

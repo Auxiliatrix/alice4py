@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from alina.utils.generic import Generic
+from alina.utils.typing.generic import Generic
 
 class EventHandler(Generic, ABC):
     
@@ -7,7 +7,7 @@ class EventHandler(Generic, ABC):
         self._event_type = event_type
 
     @abstractmethod
-    def handle(payload):
+    def handle(self, *payload):
         """
         Handle the payload of a given event received from Discord.
 
