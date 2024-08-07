@@ -1,4 +1,4 @@
-import discord,logging
+import discord, logging
 
 class AliceClient(discord.Client):
     """
