@@ -1,5 +1,4 @@
 from alina.utils.typing.generic import Generic
-from alice.main.aliceclient import AliceClient
 from alice.framework.events.handlers.eventhandler import EventHandler
 from alice.framework.events.base.eventtype import EventType
 

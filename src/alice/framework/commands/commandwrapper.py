@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-from discord.ext import commands
 from alice.main import constants
 
 class CommandWrapper(ABC):
