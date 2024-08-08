@@ -7,5 +7,5 @@ async def ping(ctx):
 
 class PingCommand(CommandWrapper):
 
-    def __init__(self):
-        super().__init__("ping", ping)
+    name = "ping"
+    command_function = ping

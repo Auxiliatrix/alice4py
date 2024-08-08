@@ -16,14 +16,12 @@ if len(ALICE_TOKEN) == 0:
 
 if __name__ == "__main__":
     # TODO: this might be better structured if it attached to the client
-    ready_director = EventDirector(client, EventType.READY)
-    ready_director.attach(ReadyHandler())
+    ready_director = EventDirector(EventType.READY)
+    ready_director.register_hook(client)
+    ReadyHandler().attach(ready_director)
 
-    command_director = CommandDirector(client)
-    command_director.attach(PingCommand())
+    command_director = CommandDirector()
+    ready_director.register_hook(client)
+    PingCommand.attach(command_director, client)
 
     client.startup(ALICE_TOKEN)
-
-    # TODO: handle messagehandlers not interfering with commands
-    # either wrap commands into messagehandlers
-    # or find a static solution

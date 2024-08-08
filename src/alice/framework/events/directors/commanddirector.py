@@ -1,14 +1,23 @@
 from alice.framework.events.base.eventtype import EventType
-from alice.framework.commands.commandwrapper import CommandWrapper
-from alice.framework.events.handlers.messagehandler import MessageHandler
 from alice.framework.events.directors.eventdirector import EventDirector
 
 class CommandDirector(EventDirector):
 
-    def __init__(self, client):
+    def __init__(self):
         self._commands = []
-        super().__init__(client, EventType.MESSAGE)
+        self._registered = False
+        super().__init__(EventType.MESSAGE)
     
+    def register_hook(self, client):
+        if not self._registered:
+            async def direct_wrapper(self, *payload):
+                result = self.direct_wrapper(*payload)
+                await client.process_commands(*payload)
+                return result
+            self.direct = direct_wrapper
+            self._registered = True
+        super().register_hook(client)
+
     async def direct(self, *payload):
         invoked = False
         for command in self._commands:
@@ -18,13 +27,3 @@ class CommandDirector(EventDirector):
         for handler in self._handlers:
             if not invoked or not handler.recessive:
                 handler.handle(*payload)
-        await self._client.process_commands(*payload)
-
-    def attach(self, attachee):
-        if isinstance(attachee, CommandWrapper):
-            self._commands.append(attachee)
-            self._client.add_command(attachee.command_function)
-        else:
-            if not isinstance(attachee, MessageHandler):
-                raise TypeError(f"'attachee' must be an object of type 'MessageHandler', not '{type(attachee)}'.")
-            self._handlers.append(attachee)

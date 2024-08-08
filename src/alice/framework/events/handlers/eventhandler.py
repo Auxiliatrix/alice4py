@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from alina.utils.typing.generic import Generic
+from alice.framework.events.directors.eventdirector import EventDirector
 
 class EventHandler(Generic, ABC):
     
@@ -12,10 +13,14 @@ class EventHandler(Generic, ABC):
         Handle the payload of a given event received from Discord.
 
         :param payload: Event payload to process.
-        :return: Function to be executed in response to the payload.
         """
-        return lambda: None
+        pass
     
+    def attach(self, director: EventDirector):
+        if director.generic() != self.generic():
+            raise TypeError(f"Imcompatible event types: '{self.generic()}' and '{director.generic()}'.")
+        director._handlers.append(self)
+
     def generic(self):
         return self._event_type
 
