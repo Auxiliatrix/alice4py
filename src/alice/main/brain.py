@@ -1,9 +1,8 @@
 import os, sys
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)),"..",".."))
 
-from alice.framework.events.base.eventtype import EventType
-from alice.framework.events.directors.eventdirector import EventDirector
-from alice.framework.events.directors.commanddirector import CommandDirector
+from alice.framework.events.types import EventType
+from alice.framework.events.directors import EventDirector, CommandDirector
 from alice.modular.handlers.readyhandler import ReadyHandler
 from alice.modular.commands.pingcommand import PingCommand
 

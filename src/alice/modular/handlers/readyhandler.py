@@ -1,6 +1,5 @@
-from alice.main import constants
-from alice.framework.events.base.eventtype import EventType
-from alice.framework.events.handlers.eventhandler import EventHandler
+from alice.framework.events.types import EventType
+from alice.framework.events.handlers import EventHandler
 
 class ReadyHandler(EventHandler):
 

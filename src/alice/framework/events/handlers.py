@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from alina.utils.typing.generic import Generic
-from alice.framework.events.directors.eventdirector import EventDirector
+from alice.framework.events.types import EventType
+from alice.framework.events.directors import EventDirector
 
 class EventHandler(Generic, ABC):
     
@@ -25,3 +26,10 @@ class EventHandler(Generic, ABC):
         return self._event_type
 
     # TODO: python annotation for help messages?
+
+class MessageHandler(EventHandler, ABC):
+
+    def __init__(self, recessive=True):
+        self.recessive = recessive
+
+        super().__init__(EventType.MESSAGE)

@@ -1,3 +1,3 @@
-from aliceclient import AliceClient
+from alice.framework.aliceclient import AliceClient
 
 client = AliceClient()

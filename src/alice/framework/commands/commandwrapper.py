@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from alice.main import constants
-from alice.framework.events.directors.commanddirector import CommandDirector
+from alice.framework.events.directors import CommandDirector
 
 class CommandWrapper(ABC):
     
