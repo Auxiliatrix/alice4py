@@ -2,12 +2,23 @@ from alina.utils.typing.generic import Generic
 from alice.framework.events.types import EventType
 
 class EventDirector(Generic):
+    """
+    An event manager that determines which handlers should activate
+    in response to a given event type.
+    """
 
     def __init__(self, event_type: EventType):
         self._event_type = event_type
         self._handlers = []
 
     def register_hook(self, client):
+        """
+        Subscribes this to a Discord client.
+
+        :param client: Client to subscribe to.
+        """
+
+        # TODO: also store registration on the client
         hook_name = f"on_{self._event_type.value}"
         setattr(self, hook_name, self.direct)
         hook = getattr(self, hook_name)
@@ -16,6 +27,12 @@ class EventDirector(Generic):
         client.event(hook)
 
     async def direct(self, *payload):
+        """
+        Manages which handlers respond to the provided payload.
+
+        :param payload: Arguments provided by the event trigger.
+        """
+
         for handler in self._handlers:
             handler.handle(*payload)
 
@@ -26,6 +43,10 @@ class EventDirector(Generic):
     # TODO: maybe if a handler requires preprocessing, that's done first
 
 class CommandDirector(EventDirector):
+    """
+    EventDirector subclass specifically to handle message events and commands.
+    Ensures that most message events do not trigger when a command is invoked.
+    """
 
     def __init__(self):
         self._commands = []

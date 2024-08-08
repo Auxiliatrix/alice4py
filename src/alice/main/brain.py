@@ -8,13 +8,13 @@ from alice.modular.commands.pingcommand import PingCommand
 
 from alice.main.namespace import client
 
-ALICE_TOKEN = os.getenv("ALICE_TOKEN","")
+ALICE_TOKEN = os.getenv("ALICE_TOKEN","")   # Get token from environment
 
 if len(ALICE_TOKEN) == 0:
     raise Exception("Missing environment variable: \"ALICE_TOKEN\"")
 
 if __name__ == "__main__":
-    # TODO: this might be better structured if it attached to the client
+    # Establish event directors, register with client, and attach handlers
     ready_director = EventDirector(EventType.READY)
     ready_director.register_hook(client)
     ReadyHandler().attach(ready_director)
@@ -23,4 +23,5 @@ if __name__ == "__main__":
     ready_director.register_hook(client)
     PingCommand.attach(command_director, client)
 
+    # Run bot
     client.startup(ALICE_TOKEN)

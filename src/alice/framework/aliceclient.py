@@ -40,6 +40,8 @@ class AliceClient(commands.Bot):
         """
         Establishes a Discord Client connection with the given parameters.
         Starts up all necessary components.
+
+        :param token: Bot token to run as.
         """
 
         self.run(token)
@@ -48,4 +50,5 @@ class AliceClient(commands.Bot):
         """
         Shuts down the Discord Client connection and performs cleanup operations.
         """
+        
         pass

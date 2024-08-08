@@ -1,6 +1,10 @@
 from enum import Enum
 
 class EventType(Enum):
+    """
+    Enum containing all valid Event types.
+    """
+    
     RAW_APP_COMMAND_PERMISSIONS_UPDATE = "raw_app_command_permissions_update"
     APP_COMMAND_COMPLETION = "app_command_completion"
     AUTOMOD_RULE_CREATE = "automod_rule_create"
