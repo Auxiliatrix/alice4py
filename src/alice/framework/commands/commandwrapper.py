@@ -12,4 +12,4 @@ class CommandWrapper(ABC):
         return f"{constants.PREFIX}{self.name}"
 
     def invoked(self, *payload):
-        return payload[0].content.split(' ')[0].lower() == self.invocation().lower()
+        return payload[0][0].content.split(' ')[0].lower() == self.invocation().lower()

@@ -9,9 +9,18 @@ class EventDirector(Generic):
         self._client = client
         self._event_type = event_type
         self._handlers = []
-        setattr(AliceClient, f"on_{self._event_type}", self.direct)
 
-    def direct(self, *payload):
+        self.register_hook()
+
+    def register_hook(self):
+        hook_name = f"on_{self._event_type.value}"
+        setattr(self, hook_name, self.direct)
+        hook = getattr(self, hook_name)
+        hook.__func__.__name__ = hook_name
+        hook.__func__.__qualname__ = f"{__class__.__qualname__}.{hook_name}"
+        self._client.event(hook)
+
+    async def direct(self, *payload):
         for handler in self._handlers:
             handler.handle(payload)
 

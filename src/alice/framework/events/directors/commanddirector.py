@@ -9,7 +9,7 @@ class CommandDirector(EventDirector):
         self._commands = []
         super().__init__(client, EventType.MESSAGE)
     
-    def direct(self, *payload):
+    async def direct(self, *payload):
         invoked = False
         for command in self._commands:
             if command.invoked(payload):
