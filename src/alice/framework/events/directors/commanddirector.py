@@ -12,17 +12,18 @@ class CommandDirector(EventDirector):
     async def direct(self, *payload):
         invoked = False
         for command in self._commands:
-            if command.invoked(payload):
+            if command.invoked(*payload):
                 invoked = True
                 break
         for handler in self._handlers:
             if not invoked or not handler.recessive:
-                handler.handle(payload)
+                handler.handle(*payload)
+        await self._client.process_commands(*payload)
 
     def attach(self, attachee):
         if isinstance(attachee, CommandWrapper):
             self._commands.append(attachee)
-            self._client.command_hook.add_command(attachee.command_function)
+            self._client.add_command(attachee.command_function)
         else:
             if not isinstance(attachee, MessageHandler):
                 raise TypeError(f"'attachee' must be an object of type 'MessageHandler', not '{type(attachee)}'.")

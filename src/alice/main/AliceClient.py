@@ -3,7 +3,7 @@ from discord.ext import commands
 
 from alice.main import constants
 
-class AliceClient(discord.Client):
+class AliceClient(commands.Bot):
     """
     A wrapper class for discord.Client which manages the client connection
     and contains default presets for client initialization.
@@ -26,9 +26,7 @@ class AliceClient(discord.Client):
         Initializes the AliceClient Discord Client manager.
         """
 
-        self.command_hook = commands.Bot(command_prefix=constants.PREFIX, intents=AliceClient._get_intents())
-
-        super().__init__(intents=AliceClient._get_intents(), logging=self._get_logger())
+        super().__init__(command_prefix=constants.PREFIX, intents=AliceClient._get_intents(), logging=self._get_logger())
     
     def _get_logger(self):
         """

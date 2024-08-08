@@ -22,7 +22,7 @@ class EventDirector(Generic):
 
     async def direct(self, *payload):
         for handler in self._handlers:
-            handler.handle(payload)
+            handler.handle(*payload)
 
     def attach(self, handler):
         if not isinstance(handler, EventHandler):

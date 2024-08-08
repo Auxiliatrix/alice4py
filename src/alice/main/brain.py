@@ -7,7 +7,7 @@ from alice.framework.events.directors.commanddirector import CommandDirector
 from alice.modular.handlers.readyhandler import ReadyHandler
 from alice.modular.commands.pingcommand import PingCommand
 
-from aliceclient import AliceClient
+from alice.main.namespace import client
 
 ALICE_TOKEN = os.getenv("ALICE_TOKEN","")
 
@@ -15,8 +15,6 @@ if len(ALICE_TOKEN) == 0:
     raise Exception("Missing environment variable: \"ALICE_TOKEN\"")
 
 if __name__ == "__main__":
-    client = AliceClient()
-
     # TODO: this might be better structured if it attached to the client
     ready_director = EventDirector(client, EventType.READY)
     ready_director.attach(ReadyHandler())
